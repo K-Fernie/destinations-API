@@ -2,6 +2,7 @@
 //this file will manage your dependencies
 "use strict";
 import express from "express";
+import cors from "cors";
 
 const destinationsDB = {
   123456: {
@@ -21,6 +22,7 @@ const destinationsDB = {
 //TODO- install express with npm install express --save
 //TODO- create the app variable
 const app = express();
+app.use(cors());
 //TODO- establish a listener (via a port)
 //TODO - make the port variable so that it works no matter where it's called
 
