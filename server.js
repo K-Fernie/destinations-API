@@ -2,6 +2,9 @@
 //this file will manage your dependencies
 "use strict";
 import express from "express";
+import cors from "cors";
+
+app.use(cors);
 
 const destinationsDB = {
   123456: {
@@ -34,4 +37,12 @@ app.listen(PORT, () => {
 //TODO - create an app.get that gets the contents of the index.js and returns them to the site
 app.get("/", (req, res) => {
   res.send(destinationsDB);
+});
+
+app.post("/", (req, res) => {
+  destinationsDB[234568] = {
+    destination: "Tokyo",
+    location: "Japan",
+    photo: "none",
+  };
 });
