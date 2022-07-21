@@ -54,6 +54,7 @@ app.get("/destinations/city/:myCity", (req, res) => {
 });
 
 app.post("/destinations/addCard", (req, res) => {
+  //req.body
   destinationsDB["123456789"] = "Tokyo";
   res.send(destinationsDB);
 });

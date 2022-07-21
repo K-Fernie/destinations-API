@@ -2,7 +2,7 @@ function filterObj({ destinationsDB: obj, city: filterValue }) {
   const filtered = {};
 
   for (const prop in obj) {
-    if (obj[prop].location === filterValue) {
+    if (obj[prop].location.toLowerCase() === filterValue.toLowerCase()) {
       filtered[prop] = obj[prop];
     }
   }
