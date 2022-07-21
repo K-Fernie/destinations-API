@@ -39,9 +39,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  destinationsDB[234568] = {
-    destination: "Tokyo",
-    location: "Japan",
-    photo: "none",
-  };
+  destinationsDB
+    .insertOne(req.body)
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => console.log(error));
 });
