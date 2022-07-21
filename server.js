@@ -3,15 +3,22 @@
 "use strict";
 import express from "express";
 import cors from "cors";
+import { filterDestinations } from "./helper.js";
 
 const destinationsDB = {
-  123456: {
+  12345: {
     destination: "Eiffel Tower",
     location: "Paris",
     photo:
       "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
   },
-  234567: {
+  123456: {
+    destination: "Champs elysees",
+    location: "France",
+    photo:
+      "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+  },
+  12345678: {
     destination: "Big Ben",
     location: "London",
     photo:
@@ -34,15 +41,19 @@ app.listen(PORT, () => {
 });
 
 //TODO - create an app.get that gets the contents of the index.js and returns them to the site
-app.get("/", (req, res) => {
-  res.send(destinationsDB);
+app.get("/destinations", (req, res) => {
+  const city = req.query.city;
+  filterDestinations({ city, destinationsDB, res });
 });
 
-app.post("/", (req, res) => {
-  destinationsDB
-    .insertOne(req.body)
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => console.log(error));
+//GET /destinations/city/:myCity
+app.get("/destinations/city/:myCity", (req, res) => {
+  //log the city passed in the url as a named route parameter
+  const city = req.params.myCity;
+  filterDestinations({ city, destinationsDB, res });
+});
+
+app.post("/destinations/addCard", (req, res) => {
+  destinationsDB["123456789"] = "Tokyo";
+  res.send(destinationsDB);
 });
