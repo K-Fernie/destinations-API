@@ -69,13 +69,13 @@ MongoClient.connect(CONNECTION_STRING).then(async (client) => {
       .catch((error) => console.error(error));
   });
 
-  app.post("/destinations/addCard", (req, res) => {
+  app.post("/destinations", (req, res) => {
     //req.body
     cardCollection
       .insertOne(req.body)
       .then((result) => {
         console.log(result);
-        res.redirect("/destinations");
+        res.redirect("/");
       })
       .catch((error) => console.error(error));
   });
