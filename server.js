@@ -52,34 +52,46 @@ app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-MongoClient.connect(CONNECTION_STRING).then(async (client) => {
-  console.log("Connected to database");
-  const db = client.db("destinations");
-  const cardCollection = db.collection("destination-cards");
+MongoClient.connect(CONNECTION_STRING)
+  .then(async (client) => {
+    console.log("Connected to database");
+    const db = client.db("destinations");
+    const cardCollection = db.collection("destination-cards");
 
-  app.get("/", async (req, res) => {
-    await db
-      .collection("destination-cards")
-      .find()
-      .toArray()
-      .then((results) => {
-        console.log(results);
-        res.send(results);
-      })
-      .catch((error) => console.error(error));
-  });
+    app.get("/", async (req, res) => {
+      await db
+        .collection("destination-cards")
+        .find()
+        .toArray()
+        .then((results) => {
+          console.log(results);
+          res.send(results);
+        })
+        .catch((error) => console.error(error));
+    });
 
-  app.post("/destinations", (req, res) => {
-    //req.body
-    cardCollection
-      .insertOne(req.body)
-      .then((result) => {
-        console.log(result);
-        res.redirect("/");
-      })
-      .catch((error) => console.error(error));
-  });
-});
+    app.post("/destinations", (req, res) => {
+      //req.body
+      cardCollection
+        .insertOne(req.body)
+        .then((result) => {
+          console.log(result);
+          res.redirect("/");
+        })
+        .catch((error) => console.error(error));
+    });
+
+    app.delete("/destinations", (req, res) => {
+      //handle delete event here
+      cardCollection
+        .deleteOne({ _id: req.body._id })
+        .then((result) => {
+          res.json();
+        })
+        .catch((error) => console.error(error));
+    });
+  })
+  .catch((error) => console.error(error));
 
 //TODO - create an app.get that gets the contents of the index.js and returns them to the site
 // app.get("/destinations", (req, res) => {
