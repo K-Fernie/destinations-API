@@ -4,7 +4,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { filterDestinations } from "./helper.js";
 
 //INTERNAL DB MEMORY
@@ -81,12 +81,12 @@ MongoClient.connect(CONNECTION_STRING)
         .catch((error) => console.error(error));
     });
 
-    app.delete("/destinations", (req, res) => {
+    app.delete("/destinations/remove:id", (req, res) => {
       //handle delete event here
       cardCollection
-        .deleteOne({ _id: req.body._id })
+        .deleteOne({ _id: ObjectId(req.params.id) })
         .then((result) => {
-          res.json();
+          res.json("Destination deleted");
         })
         .catch((error) => console.error(error));
     });
