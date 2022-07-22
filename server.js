@@ -52,13 +52,14 @@ app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-MongoClient.connect(CONNECTION_STRING).then((client) => {
+MongoClient.connect(CONNECTION_STRING).then(async (client) => {
   console.log("Connected to database");
   const db = client.db("destinations");
   const cardCollection = db.collection("destination-cards");
 
-  app.get("/", (req, res) => {
-    db.collection("destination-cards")
+  app.get("/", async (req, res) => {
+    await db
+      .collection("destination-cards")
       .find()
       .toArray()
       .then((results) => {
