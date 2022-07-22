@@ -58,10 +58,7 @@ MongoClient.connect(CONNECTION_STRING).then((client) => {
   const cardCollection = db.collection("destination-cards");
 
   app.get("/", (req, res) => {
-    //const city = req.query.city;
-    //update function to iterate over the results array and return a filtered array
-
-    cardCollection
+    db.collection("destination-cards")
       .find()
       .toArray()
       .then((results) => {
